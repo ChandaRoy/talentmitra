@@ -1,0 +1,132 @@
+
+<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg black lighter-4 navbar-dark scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand" >
+
+        
+        <h2><img src="assets/images/birdie.png" class="logo" style="height:40px"><strong class="white-text">Tech<span class="yellow-text">Birdies</span></strong></h2>
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active" >
+            <a class="nav-link" routerLink="">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" routerLink="sections" *ngIf="currentUser">Chapters</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="blogs" *ngIf="currentUser">Blogs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="forum" *ngIf="currentUser">Forum</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="about" >About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="contact" >Contact Us</a>
+              </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ></a>
+          </li>
+          
+         
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons my-2 my-lg-0 ml-auto">
+          <li class="nav-item dropdown" *ngIf="currentUser">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.user">{{currentUser.user.firstName?currentUser.user.firstName+' '+currentUser.user.lastName : currentUser.user.email}}</a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false" *ngIf="!currentUser.user">Hello Guest</a>
+            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" routerLink="profile">Update Profile</a>
+            </div>
+          </li>
+            <li class="nav-item" *ngIf="currentUser">
+                <a class="nav-item nav-link" *ngIf="currentUser" (click)="logout()">Logout</a>
+              </li>
+          <li class="nav-item">
+            <a href="https://www.facebook.com/dev.portal.90" class="nav-link" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a  class="nav-link" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+<div class="container-fluid px-0" style="margin-bottom:12rem;margin-top:9rem;">
+<router-outlet></router-outlet>
+</div>
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 " style="width:100%">
+
+
+    <hr class="my-1">
+
+    <!-- Social icons -->
+    <div class="pb-4">
+      <a >
+        <i class="fab fa-facebook-f mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-twitter mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-youtube mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-google-plus-g mr-3"></i>
+      </a>
+
+
+      <a href="#">
+        <i class="fab fa-pinterest mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-github mr-3"></i>
+      </a>
+
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-2">
+      © 2020 Copyright:
+      <span class="white-text">
+          TechBirdies Team
+      </span>
+    
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
