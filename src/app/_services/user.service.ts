@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  public url ="http://localhost:8080";
+  public url ="https://talentmitra-o5ryx.ondigitalocean.app";
   
 
   constructor(private http: HttpClient) { }
