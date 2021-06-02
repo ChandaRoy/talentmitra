@@ -116,7 +116,7 @@ class AuthGuardService {
         this.router = router;
         this.authenticationService = authenticationService;
         this.http = http;
-        this.url = "http://localhost:8080";
+        this.url = "https://talentmitra-o5ryx.ondigitalocean.app";
     }
     canActivate(route, state) {
         console.log("came to canActivate");
@@ -263,7 +263,7 @@ __webpack_require__.r(__webpack_exports__);
 class PostQueryService {
     constructor(http) {
         this.http = http;
-        this.url = "http://localhost:8080";
+        this.url = "https://talentmitra-o5ryx.ondigitalocean.app";
         // baseURL = "http://localhost:8080/api";
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]().set('Content-Type', 'application/json');
     }
@@ -399,7 +399,7 @@ __webpack_require__.r(__webpack_exports__);
 class UserService {
     constructor(http) {
         this.http = http;
-        this.url = "http://localhost:8080";
+        this.url = "https://talentmitra-o5ryx.ondigitalocean.app";
     }
     updateProfile(data, token) {
         console.log(data);
@@ -2720,7 +2720,7 @@ __webpack_require__.r(__webpack_exports__);
 class AuthServiceService {
     constructor(http) {
         this.http = http;
-        this.url = "http://localhost:8080";
+        this.url = "https://talentmitra-o5ryx.ondigitalocean.app";
         this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
