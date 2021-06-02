@@ -11,7 +11,7 @@ import { AuthServiceService } from '../login/auth-service.service';
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate {
-  public url ="http://localhost:8080";
+  public url ="https://talentmitra-o5ryx.ondigitalocean.app";
   constructor(
     private router: Router,
     private authenticationService: AuthServiceService,
