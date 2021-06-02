@@ -109,7 +109,7 @@
                     <div *ngIf="post.comments">
                         <div class="media d-block d-md-flex mt-4" *ngFor="let comment of post.comments">
                             <img class="d-flex mb-3 mx-auto "
-                                src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg"
+                                [src]="comment.commentedBy?.photo"
                                 alt="Generic placeholder image">
                             <div class="media-body text-center text-md-left ml-md-3 ml-0">
                                 <h6 class="mt-0 font-weight-bold">{{comment.commentedBy?.firstName+' '+comment.commentedBy?.lastName}}
@@ -122,7 +122,7 @@
                                     <div class="media d-block d-md-flex mt-3"
                                         *ngFor="let commentReply of comment.commentReplies">
                                         <img class="d-flex mb-3 mx-auto "
-                                            src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg"
+                                            [src]="commentReply.commentedBy?.photo"
                                             alt="Generic placeholder image">
                                         <div class="media-body text-center text-md-left ml-md-3 ml-0">
                                             <h6 class="mt-0 font-weight-bold">{{commentReply.commentedBy?.firstName+' '+commentReply.commentedBy?.lastName}}
