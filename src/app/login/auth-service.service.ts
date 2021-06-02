@@ -12,7 +12,7 @@ import { User } from '../_models/user';
 export class AuthServiceService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  public url ="http://localhost:8080";
+  public url ="https://talentmitra-o5ryx.ondigitalocean.app";
   private code;
 
   constructor(private http: HttpClient) {
