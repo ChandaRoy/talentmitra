@@ -12,7 +12,7 @@ import { Post } from '../_models/post';
 export class PostQueryService {
   private currentUserSubject: BehaviorSubject<QueryMessage>;
   public currentQuery: Observable<QueryMessage>;
-  public url ="http://localhost:8080";
+  public url ="https://talentmitra-o5ryx.ondigitalocean.app";
   // baseURL = "http://localhost:8080/api";
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
