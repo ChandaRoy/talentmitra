@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node ${SCRIPT:-app.js}",
+    "build": "ng build",
     "deploy": "gcloud app deploy app.yaml --promote",
     "test": "ng test",
     "lint": "ng lint",
