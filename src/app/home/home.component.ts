@@ -1,7 +1,7 @@
 // https://www.positronx.io/angular-8-express-file-upload-tutorial-with-reactive-forms/
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy  {
   constructor(
     private router: Router,
     private authenticationService: AuthServiceService,
-    private postQueryService: PostQueryService
+    private postQueryService: PostQueryService,
+    private route: ActivatedRoute
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -63,9 +64,13 @@ export class HomeComponent implements OnInit, OnDestroy  {
    }
 
   getPosts() {
-    this.postQueryService.getPosts(this.currentUser.token).subscribe((res) => {
+    this.postQueryService.getPosts('', this.currentUser.token).subscribe((res) => {
       this.Posts = res['posts'];
     })
+  }
+
+  gotoDetails(id) {
+    this.router.navigate(['blogs/post-detail/'+id]);
   }
 
 }

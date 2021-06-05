@@ -21,6 +21,7 @@ export class BlogCreateComponent implements OnInit {
   preview: string;
   percentDone: any = 0;
   posts = [];
+  categories: any = [];
   Posts: any = [];
 
   constructor(
@@ -34,11 +35,19 @@ export class BlogCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCategories();
     this.postContent = this.formBuilder.group({
       content: ['', Validators.required],
       category: ['', Validators.required],
       shortDescription: ['',Validators.required],
       myFile: [Validators.required]
+    });
+  }
+
+  getCategories() {
+    this.postQueryService.getCategories(this.currentUser.token).subscribe((res) => {
+      console.log(res);
+      this.categories = res;
     });
   }
 

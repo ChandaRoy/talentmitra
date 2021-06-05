@@ -15,6 +15,7 @@ import { TopicListComponent } from './topic-list/topic-list.component';
 import { BlogComponent } from './blog/blog.component';
 import { BlogCreateComponent } from './blog-create/blog-create.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 
 
@@ -30,8 +31,9 @@ const routes: Routes = [
     component: BlogComponent,
     children: [
       {path: '', component: PostsComponent},
-      {path: 'posts', component: PostsComponent},
+      {path: 'posts/:id', component: PostsComponent},
       {path: 'post-detail/:id', component: PostDetailComponent},
+      {path: 'profile/:id', component: UserDetailsComponent}
     ] 
   },
   { 
@@ -39,7 +41,7 @@ const routes: Routes = [
     component: ForumComponent,
     children: [
     {path: '', component: TopicListComponent},
-    {path: 'topic-list', component: TopicListComponent},
+    {path: 'topic-list/:id', component: TopicListComponent},
     {path: 'topic-detail/:id', component: TopicDetailComponent},
   ] 
   },

@@ -7,7 +7,7 @@
             <!--Card-->
             <div class="card">
               <div *ngIf="post.myFile">
-                <div *ngIf="post.myFile.split('.')[1]==='mp4'">
+                <div *ngIf="getFileType(post.myFile)==='mp4'">
                     <div class="view overlay">
                         <div class="embed-responsive rounded-top">
                             <video width="320" height="240" controls>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div
-                    *ngIf="post.myFile.split('.')[1]==='jpg' || post.myFile.split('.')[1]==='bmp' || post.myFile.split('.')[1]==='png'|| post.myFile.split('.')[1]==='gif'">
+                    *ngIf="getFileType(post.myFile)==='jpg' || getFileType(post.myFile)==='bmp' || getFileType(post.myFile)==='gif' || getFileType(post.myFile)==='png'">
                     <div class="view overlay">
                         <div class="embed-responsive rounded-top">
                             <img [src]="post.myFile" class="img-fluid" alt="">

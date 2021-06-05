@@ -102,8 +102,11 @@
                     <div class="divline"></div>
                     <div class="blocktxt">
                         <ul class="groups">
-                            <li *ngFor="let group of groups"><a href="#">{{group._id}} <span
-                                        class="badge pull-right">{{group.count}}</span></a></li>
+                            <li *ngFor="let group of groups">
+                                <a (click)="gotoPostsByCategory(group._id)" href="javascript:void(0)">{{group._id}}
+                                    <span class="badge pull-right">{{group.count}}</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -113,7 +116,7 @@
                     <div class="divline"></div>
                     <div *ngFor="let thread of threads">
                         <div class="blocktxt">
-                            <a href="#">{{thread.title}}</a>
+                            <a href="javascript:void(0)" (click)="gotoDetails(thread._id)">{{thread.title}}</a>
                         </div>
                         <div class="divline"></div>
                     </div>

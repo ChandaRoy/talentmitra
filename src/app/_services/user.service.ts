@@ -8,8 +8,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  public url ="https://talentmitra-o5ryx.ondigitalocean.app";
-  
+  // public url ="https://talentmitra-o5ryx.ondigitalocean.app";
+  public url = '';
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +31,10 @@ export class UserService {
 
   getUserDetails( token) {
     return this.http.get(this.url+'/user/details?secret_token='+ token);
+  }
+
+  gerUserProfile(id, token) {
+    return this.http.get(this.url+'/user/profile/'+ id+'?secret_token='+ token);
   }
 
 

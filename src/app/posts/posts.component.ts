@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { Post } from '../_models/post';
@@ -18,6 +18,7 @@ export class PostsComponent implements OnInit {
   currentUser: User;
   posts = [];
   Posts: any = [];
+  category: any = '';
 
   constructor(
     private router: Router,
@@ -30,16 +31,26 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPosts();
+    this.route.params.subscribe((params: Params) => {
+      console.log(params);
+      this.category = params && params.id ? params.id : '';
+      this.getPosts();
+    });
   }
 
   getPosts() {
-    this.postQueryService.getPosts(this.currentUser.token).subscribe((res) => {
+    this.postQueryService.getPosts(this.category, this.currentUser.token).subscribe((res) => {
       this.Posts = res['posts'];
     })
   }
   
   gotoDetails(id) {
-    this.router.navigate(['post-detail/'+id], {relativeTo: this.route});
+    this.router.navigate(['blogs/post-detail/'+id]);
+  }
+
+  getFileType(filename) {
+    var arr = filename.split('.');
+    var index = arr.length - 1;
+    return arr[index];
   }
 }

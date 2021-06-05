@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { User } from '../_models/user';
 import { Topic } from '../_models/topic';
@@ -21,20 +21,21 @@ export class ForumComponent implements OnInit {
   Topics: any = [];
   showCreate: boolean = false;
   groups: any = [];
+  categories: any = [];
   threads: any =[];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthServiceService,
-    private postQueryService: PostQueryService
+    private postQueryService: PostQueryService,
+    private route: ActivatedRoute
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
     if (!this.currentUser) this.router.navigate(['/']);
   }
 
   ngOnInit(): void {
-    this.getTopics();
     this.getTopicGroups();
     this.getMyTopicThreads();
     this.topicContent = this.formBuilder.group({
@@ -62,8 +63,15 @@ export class ForumComponent implements OnInit {
     });
   }
 
+  getCategories() {
+    this.postQueryService.getCategories(this.currentUser.token).subscribe((res) => {
+      console.log(res);
+      this.categories = res;
+    });
+  }
+
   getTopics() {
-    this.postQueryService.getTopics(this.currentUser.token).subscribe((res) => {
+    this.postQueryService.getTopics('', this.currentUser.token).subscribe((res) => {
       console.log(res);
       this.Topics = res;
     });
@@ -81,6 +89,15 @@ export class ForumComponent implements OnInit {
       console.log(res);
       this.threads = res;
     });
+  }
+
+  gotoPostsByCategory(id) {
+    console.log(id);
+    this.router.navigate(['topic-list/'+id], {relativeTo: this.route});
+  }
+
+  gotoDetails(id) {
+    this.router.navigate(['forum/topic-detail/'+id]);
   }
 
 }

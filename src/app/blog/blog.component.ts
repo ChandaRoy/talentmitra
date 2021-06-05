@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { User } from '../_models/user';
 import { Topic } from '../_models/topic';
@@ -18,16 +18,18 @@ export class BlogComponent implements OnInit {
   users = [];
   topicContent: FormGroup;
   topics = [];
-  Posts: any = [];
+  posts: any = [];
   showCreate: boolean = false;
   groups: any = [];
   threads: any =[];
+  category: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthServiceService,
-    private postQueryService: PostQueryService
+    private postQueryService: PostQueryService,
+    private route: ActivatedRoute
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
     if (!this.currentUser) this.router.navigate(['/']);
@@ -37,6 +39,7 @@ export class BlogComponent implements OnInit {
   ngOnInit(): void {
     this.getTopicGroups();
     this.getMyTopicThreads();
+    this.getRecentTopics();
   }
 
   toggleShow() {
@@ -54,11 +57,27 @@ export class BlogComponent implements OnInit {
     });
   }
 
+  getRecentTopics() {
+    this.postQueryService.getRecentPosts(this.currentUser.token).subscribe((res) => {
+      console.log(res);
+      this.posts = res;
+    });
+  }
+
   getMyTopicThreads() {
     this.postQueryService.getMyPostThreads(this.currentUser.token).subscribe((res) => {
       console.log(res);
       this.threads = res;
     });
+  }
+
+  gotoPostsByCategory(id) {
+    this.router.navigate(['posts/'+id], {relativeTo: this.route});
+    // this.router.navigate(['blogs/'+id]);
+  }
+
+  gotoDetails(id) {
+    this.router.navigate(['blogs/post-detail/'+id]);
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Topic } from '../_models/topic';
 import { PostQueryService } from '../_services/post-query.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthServiceService } from '../login/auth-service.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class TopicListComponent implements OnInit {
   topics = [];
   Topics: any = [];
   currentUser: any;
+  category: any = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -25,17 +26,21 @@ export class TopicListComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.getTopics();
+    this.route.params.subscribe((params: Params) => {
+      console.log(params);
+      this.category = params && params.id ? params.id : '';
+      this.getTopics();
+    });
   }
   getTopics() {
-    this.postQueryService.getTopics(this.currentUser.token).subscribe((res) => {
+    this.postQueryService.getTopics(this.category, this.currentUser.token).subscribe((res) => {
       console.log(res);
       this.Topics = res;
     })
   }
 
   gotoDetails(id) {
-    this.router.navigate(['topic-detail/'+id], {relativeTo: this.route});
+    this.router.navigate(['forum/topic-detail/'+id]);
   }
 
   incLike() {
