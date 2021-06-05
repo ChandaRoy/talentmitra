@@ -6,22 +6,35 @@ var path = require('path');
 
 var User = require('../models/user.js');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
 
-    cb(null, 'uploads/dps');
-  },
-  filename: (req, file, cb) => {
-    console.log(req.body);
-    let email = req.body.email;
-    const fileName = email+'.'+ file.originalname.split('.')[1];
+//     cb(null, 'uploads/dps');
+//   },
+//   filename: (req, file, cb) => {
+//     console.log(req.body);
+//     let email = req.body.email;
+//     const fileName = email+'.'+ file.originalname.split('.')[1];
 
-    console.log(fileName);
-    cb(null, fileName)
-  }
-});
+//     console.log(fileName);
+//     cb(null, fileName)
+//   }
+// });
 
-var upload = multer({storage: storage}).single('myFile');
+//************************ */cloudinary *************************
+const cloudinary = require("./upload");
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+  const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'user-profiles',
+      allowedFormats: ['jpg', 'png'] // supports promises as well
+    }
+  });
+
+  var upload = multer({storage: storage}).single('myFile');
+//************************ */cloudinary *************************
 
 router.post('/updateUser', function (req, res) {
   upload(req, res, function (err) {
@@ -39,9 +52,9 @@ router.post('/updateUser', function (req, res) {
       return
     }
     if (req.file) {
-      const url = req.protocol + '://' + req.get('host');
+      const url = req.file.path;
       
-      newUserDetails.photo = url + '/dps/' + req.file.filename;
+      newUserDetails.photo = url;
       console.log(newUserDetails.photo);
     } 
     User.findOneAndUpdate({ 
@@ -110,6 +123,20 @@ router.get('/all',function(req,res,next){
   User.find({},{email : 1},function(err,data){
     res.send(data);
   })
+})
+
+router.get('/profile/:id',function(req,res,next){
+  User.findById(req.params.id)
+  .then(data => {
+    if (data) {
+      // console.log(data);
+      res.send(data);
+    } else {
+      res.status(404).json({
+        message: "User not found!"
+      });
+    }
+  });
 })
 
 router.get('/',function(req,res,next){

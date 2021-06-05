@@ -12,8 +12,9 @@ import { Post } from '../_models/post';
 export class PostQueryService {
   private currentUserSubject: BehaviorSubject<QueryMessage>;
   public currentQuery: Observable<QueryMessage>;
-  public url ="https://talentmitra-o5ryx.ondigitalocean.app";
-  // baseURL = "http://localhost:8080/api";
+  // public url ="https://talentmitra-o5ryx.ondigitalocean.app";
+  // baseURL = "http://localhost:8083/api";
+  public url = 'http://localhost:8080';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
 
@@ -53,8 +54,11 @@ export class PostQueryService {
       })
     }
 
-    getTopics(token) {
-      return this.http.get(this.url+'/content/allTopics?secret_token=' + token);
+    getTopics(category, token) {
+      if (category) {
+        return this.http.get(this.url+'/content/category-topics/'+category +'?secret_token='+token);
+      }
+      return this.http.get(this.url+'/content/allTopics?secret_token='+token);
     }
   
     getTopicById(id, token) {
@@ -65,6 +69,7 @@ export class PostQueryService {
     getTopicGroups(token) {
       return this.http.get(this.url+'/content/topic-groups?secret_token='+token);
     }
+    
 
     
   getMyTopicThreads(token) {
@@ -113,13 +118,28 @@ export class PostQueryService {
       return this.http.get(this.url+'/content/post-groups?secret_token='+token);
     }
 
+    getRecentPosts(token) {
+      return this.http.get(this.url+'/content/recent-posts?secret_token='+token);
+    }
+
     getPostById(id, token) {
       console.log(this.url+'/content/post/'+id);
       return this.http.get(this.url+'/content/post/'+id +'?secret_token='+token);
     }
 
-    getPosts(token) {
-      return this.http.get(this.url+'/content/all?secret_token='+token);
+    getPosts(category, token) {
+      if (category) {
+        return this.http.get(this.url+'/content/category-posts/'+category +'?secret_token='+token);
+      }
+      return this.http.get(this.url+'/content/posts?secret_token='+token);
+    }
+
+    getCategoryPosts(token) {
+      return this.http.get(this.url+'/content/category-posts?secret_token='+token);
+    }
+
+    getCategories(token) {
+      return this.http.get(this.url+'/content/categories?secret_token='+token);
     }
     
   // Blog methods end

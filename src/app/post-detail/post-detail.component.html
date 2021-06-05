@@ -12,7 +12,7 @@
 
                     <p class="h6 my-4">{{post.category}} </p>
                     <div *ngIf="post.myFile">
-                        <div *ngIf="post.myFile.split('.')[1]==='mp4'">
+                        <div *ngIf="getFileType(post.myFile)==='mp4'">
                             <div class="view overlay">
                                 <div class="embed-responsive rounded-top">
                                     <video width="320" height="240" class="img-fluid" controls>
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                         <div
-                            *ngIf="post.myFile.split('.')[1]==='jpg' || post.myFile.split('.')[1]==='bmp' || post.myFile.split('.')[1]==='png'|| post.myFile.split('.')[1]==='gif'">
+                            *ngIf="getFileType(post.myFile)==='jpg' || getFileType(post.myFile)==='bmp' || getFileType(post.myFile)==='png'|| getFileType(post.myFile)==='gif'">
                             <div class="view overlay">
                                 <div class="embed-responsive rounded-top">
                                     <img [src]="post.myFile" alt="" class="img-fluid">
@@ -45,7 +45,7 @@
 
                 <div class="card-header font-weight-bold">
                     <span>About author</span>
-                    <span class="pull-right">
+                    <!-- <span class="pull-right">
                         <a href="">
                             <i class="fab fa-facebook-f mr-2"></i>
                         </a>
@@ -58,7 +58,7 @@
                         <a href="">
                             <i class="fab fa-linkedin-in mr-2"></i>
                         </a>
-                    </span>
+                    </span> -->
                 </div>
 
                 <!--Card content-->
@@ -69,8 +69,10 @@
                             [src]="post.postedBy?.photo"
                             alt="Generic placeholder image" style="width: 100px;">
                         <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                            <h6 class="mt-0 font-weight-bold">{{post.postedBy?.firstName+' '+post.postedBy?.lastName}}
-                            </h6>
+                            <a href="javascript:void(0)" (click)="goToUserProfile(post.postedBy?._id)">
+                                <h6 class="mt-0 font-weight-bold">{{post.postedBy?.firstName+' '+post.postedBy?.lastName}}
+                                </h6>
+                            </a>
                             <p *ngIf="post.postedBy.company">Works at {{post.postedBy?.company}}</p>
                             <p>{{post.postedBy?.aboutMe}}</p>
                         </div>

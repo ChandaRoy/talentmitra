@@ -81,6 +81,16 @@ export class PostDetailComponent implements OnInit {
     this.showReplyForm = id;
   }
 
+  getFileType(filename) {
+    var arr = filename.split('.');
+    var index = arr.length - 1;
+    return arr[index];
+  }
+
+  goToUserProfile(id) {
+    this.router.navigate(['blogs/profile/'+id]);
+  }
+
   goBack() {
     this.router.navigate(['../../../blog/'], {relativeTo: this.route});
   }

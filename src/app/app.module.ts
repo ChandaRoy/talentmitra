@@ -35,6 +35,7 @@ import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 import { BlogComponent } from './blog/blog.component';
 import { BlogCreateComponent } from './blog-create/blog-create.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
     TopicDetailComponent,
     BlogComponent,
     BlogCreateComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

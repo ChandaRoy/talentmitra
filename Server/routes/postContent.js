@@ -4,29 +4,54 @@ let express = require('express'),
   router = express.Router();
 let Post = require('../models/post');
 let Topic =require('../models/topics');
+let Category =require('../models/categories');
 
 var path = require('path');
 // Multer File upload settings
-const DIR = '/public/videos';
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+//************************ */cloudinary *************************
+const cloudinary = require("./upload");
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-    cb(null, 'uploads/files');
-  },
-  filename: (req, file, cb) => {
-    const fileName = Date.now()+file.originalname.toLowerCase().split(' ').join('-');
-    cb(null, fileName)
-  }
-});
+  const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'user-blogs',
+      allowedFormats: ['jpg', 'png'] // supports promises as well
+    }
+  });
+
+//************************ */cloudinary *************************
 
 // GET All Post
-router.get("/all", (req, res, next) => {
+router.get("/posts", (req, res, next) => {
   Post.find().then(data => {
     res.status(200).json({
       message: "Posts retrieved successfully!",
       posts: data
     });
+  });
+});
+
+router.get("/category-posts/:id", (req, res, next) => {
+  console.log(req.params);
+  Post.find({category: req.params.id}).then(data => {
+    res.status(200).json({
+      message: "Posts retrieved successfully!",
+      posts: data
+    });
+  });
+});
+
+router.get("/category-topics/:id", (req, res, next) => {
+  Topic.find({ category: req.params.id }).then(data => {
+    if (data) {
+      res.send(data);
+    } else {
+      res.status(404).json({
+        message: "Topic not found!"
+      });
+    }
   });
 });
 
@@ -46,8 +71,10 @@ router.get('/my-topic-threads', function (req, res, next) {
 })
 
 router.get('/my-post-threads', function (req, res, next) {
+  console.log("++++++++++++++++++++++++++++++++++++++");
+  console.log(req.user);
   Post.find({
-    postedByEmail: req.user.email
+    'postedBy.email': req.user.email
   }, {}, function (err, data) {
     if(!err)
     res.send(data);
@@ -81,7 +108,7 @@ router.get('/topic-groups', function (req, res, next) {
        ] 
      ).then(data => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       res.send(data);
     } else {
       res.status(404).json({
@@ -101,7 +128,20 @@ router.get('/post-groups', function (req, res, next) {
        ] 
      ).then(data => {
     if (data) {
-      console.log(data);
+      // console.log(data);
+      res.send(data);
+    } else {
+      res.status(404).json({
+        message: "Post not found!"
+      });
+    }
+  });
+});
+
+router.get('/recent-posts', function (req, res, next) {
+  Post.find().sort('-postedOn').limit(5).find(function (err, data) {
+    if (data) {
+      // console.log(data);
       res.send(data);
     } else {
       res.status(404).json({
@@ -111,9 +151,21 @@ router.get('/post-groups', function (req, res, next) {
   });
 })
 
+router.get('/categories', function(req, res, next) {
+  Category.find().sort('name').find(function (err, data) {
+    if (data) {
+      res.send(data);
+    } else {
+      res.status(404).json({
+        message: "Category not found!"
+      });
+    }
+  });
+})
+
 // GET by id
 router.get("/post/:id", (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   var mysort = {"comments.postedOn" : -1};
   Post.findById(req.params.id)
   .populate('postedBy','firstName lastName photo company aboutMe email')
@@ -130,8 +182,10 @@ router.get("/post/:id", (req, res, next) => {
   });
 });
 
+
+
 router.get("/topic/:id", (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   Topic.findById(req.params.id)
   .populate('postedBy','firstName lastName photo company aboutMe email')
   .populate('comments.commentedBy', 'firstName lastName photo company aboutMe email')
@@ -149,10 +203,14 @@ router.get("/topic/:id", (req, res, next) => {
 });
 
 
-var upload = multer({storage: storage}).single('myFile')
+var upload = multer({storage: storage}).single('myFile');
+
+//adding a new blog
 
 router.post('/addPost', function (req, res) {
+  console.log("Adding post here");
   upload(req, res, function (err) {
+    console.log("process completed");
     if (err) {
       console.log("I am in error");
       console.log(err);
@@ -160,8 +218,10 @@ router.post('/addPost', function (req, res) {
       return
     }
     if(req.file) {
-    const url = req.protocol + '://' + req.get('host');
-
+    // const url = req.protocol + '://' + req.get('host');
+    // console.log(req.file);
+    const url = req.file.path;
+    console.log("url is ", req.file.path);
     const post = new Post({
       _id: new mongoose.Types.ObjectId(),
       content: req.body.content,
@@ -170,10 +230,10 @@ router.post('/addPost', function (req, res) {
       postedBy: req.user.id,
       postedOn: Date.now(),
       updatedOn: Date.now(),
-      myFile: url + '/files/' + req.file.filename
+      myFile: url 
     });
     post.save().then(result => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Post added successfully!",
         postCreated: {
@@ -199,7 +259,7 @@ router.post('/addPost', function (req, res) {
       updatedOn: Date.now()
     });
     post.save().then(result => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Post added successfully!",
         postCreated: {
@@ -231,7 +291,7 @@ router.post('/addTopic', function (req, res) {
       subcategory: req.body.subcategory
     });
     topic.save().then(result => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Topic added successfully!",
         postCreated: result
@@ -250,14 +310,14 @@ var commentDetails = {
   "commentedBy" : req.user.id,
   "commentedOn": new Date()
 };
-console.log(commentDetails);
+// console.log(commentDetails);
   Topic.findOneAndUpdate({ 
     "_id": req.body.id
   },
    { $push: { comments: commentDetails } }
    ).then(data => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       res.send(data);
     } else {
       res.status(404).json({
@@ -280,7 +340,7 @@ router.post('/postComment',function(req,res){
      { $push: { comments: commentDetails } }
      ).then(data => {
       if (data) {
-        console.log(data);
+        // console.log(data);
         res.send(data);
       } else {
         res.status(404).json({
@@ -296,7 +356,7 @@ router.post('/postCommentReply',function(req,res){
       "commentedBy" : req.user.id,
       "commentedOn": new Date()
     };
-    console.log(commentDetails);
+    // console.log(commentDetails);
       Post.findOneAndUpdate({ 
         "_id": req.body.postId,
         "comments._id": req.body.commentId
@@ -304,7 +364,7 @@ router.post('/postCommentReply',function(req,res){
        { $push: { "comments.$.commentReplies": commentDetails } }
        ).then(data => {
         if (data) {
-          console.log(data);
+          // console.log(data);
           res.send(data);
         } else {
           res.status(404).json({

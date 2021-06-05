@@ -9,37 +9,9 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// MongoClient.connect(urlString);
-var mongoose = require('mongoose');
+var db = require('./Server/routes/db.connection');
 var RedisStore = require('connect-redis')(session);
 var app = express();
-//mongoose.connect(process.env.MONGODB_URL||'mongodb://localhost/limber');
-// mongoose.connect('mongodb://dev:chanda20@ds153719.mlab.com:53719/mydb20');
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://dev:chanda20@cluster0.jchfn.mongodb.net/mydb20?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   if(err) {
-//     console.log(error);
-//   }
-//   //const collection = client.db("mydb20").collection("Users");
-//   // perform actions on the collection object
-//   // client.close();
-// });
-// const url = "mongodb://mongodb+srv://dev:chanda20@cluster0.jchfn.mongodb.net/test?retryWrites=true&w=majority";
-const url = "mongodb://dev:chanda20@cluster0-shard-00-00.jchfn.mongodb.net:27017,cluster0-shard-00-01.jchfn.mongodb.net:27017,cluster0-shard-00-02.jchfn.mongodb.net:27017/mydb20?ssl=true&replicaSet=atlas-anafwn-shard-0&authSource=admin&retryWrites=true&w=majority";
-const connectionParams={
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true 
-}
-mongoose.connect(url,connectionParams)
-  .then( () => {
-      console.log('Connected to database ')
-  })
-  .catch( (err) => {
-      console.error(`Error connecting to the database. \n${err}`);
-  })
 
 var routes = require('./Server/routes/index');
 //var users = require('./routes/users');
