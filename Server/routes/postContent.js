@@ -25,7 +25,9 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // GET All Post
 router.get("/posts", (req, res, next) => {
-  Post.find().then(data => {
+  Post.find()
+  .populate('postedBy','firstName lastName photo company aboutMe email')
+  .then(data => {
     res.status(200).json({
       message: "Posts retrieved successfully!",
       posts: data

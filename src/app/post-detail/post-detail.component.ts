@@ -24,7 +24,7 @@ export class PostDetailComponent implements OnInit {
     private authenticationService: AuthServiceService
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
-    if (!this.currentUser) this.router.navigate(['/']);
+    // if (!this.currentUser) this.router.navigate(['/']);
    }
 
   ngOnInit(): void {

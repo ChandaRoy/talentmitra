@@ -60,7 +60,7 @@
                                     <a href="javascript:void(0)" (click)="gotoDetails(post._id)">
                                         <p class="mt-0 mb-1 font-weight-bold">{{post.shortDescription}}</p>
                                     </a>
-                                    <p [innerHTML]="post.content"></p>
+                                    <p [innerHTML]="post.content|truncateText:20"></p>
                                 </div>
                             </li>
                         </ul>

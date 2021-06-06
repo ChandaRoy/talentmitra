@@ -27,7 +27,7 @@ export class PostsComponent implements OnInit {
     private route: ActivatedRoute
   ) { 
     this.currentUser = this.authenticationService.currentUserValue;
-    if (!this.currentUser) this.router.navigate(['/']);
+    // if (!this.currentUser) this.router.navigate(['/']);
   }
 
   ngOnInit() {

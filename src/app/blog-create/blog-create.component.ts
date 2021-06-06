@@ -89,6 +89,8 @@ export class BlogCreateComponent implements OnInit {
           break;
         case HttpEventType.Response:
           console.log('Post successfully created!', event.body);
+          alert(event.body.message);
+          this.router.navigate(['']);
           this.percentDone = false;
       }
     })

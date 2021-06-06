@@ -36,8 +36,7 @@ initPassport(passport);
 //Add socket.js link here
 //
 app.use(express.static(path.join(__dirname, 'dist/tech-bidies-app-v2')));
-app.use(express.static(path.join(__dirname, 'uploads')));
-console.log((path.join(__dirname, 'uploads')));
+// app.use('/', express.static(path.join(__dirname, 'dist')));
 
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -46,8 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(express.static(path.join(__dirname, 'authFolder')));
-app.use('/', routes);
+// app.use('/', routes);
 app.use('/auth',authenticationHandler);
 app.use('/content', passport.authenticate('jwt', {session: false}), postContent);
 app.use('/user', passport.authenticate('jwt', {session: false}), user);
@@ -67,7 +65,7 @@ app.use(function(req, res, next) {
 });
 
 
-
+app.use(express.static(path.join(__dirname, 'dist/tech-bidies-app-v2')));
 // app.use('/', express.static(__dirname + '/dist/tech-bidies-app-v2'));
 
 

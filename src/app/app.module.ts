@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MyMaterialModule} from './material-module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
@@ -36,6 +37,7 @@ import { BlogComponent } from './blog/blog.component';
 import { BlogCreateComponent } from './blog-create/blog-create.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { TruncateTextPipe } from './_pipes/truncare-text.pipe';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     BlogComponent,
     BlogCreateComponent,
     UpdateProfileComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    TruncateTextPipe
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { UserDetailsComponent } from './user-details/user-details.component';
   providers: [AlertService, AuthServiceService, AuthGuardService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+    {provide : LocationStrategy , useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

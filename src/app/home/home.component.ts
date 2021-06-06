@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
   navigationSubscription;
   currentUser: User;
   loggedIn: boolean = false;
-  Posts: any;
+  Posts: any = [];
 
   constructor(
     private router: Router,
@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
       this.loggedIn = false;
     } else {
       this.loggedIn = true;
-      this.getPosts();
+      this.getRecentTopics();
     }
   }
 
@@ -63,10 +63,17 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
    }
 
-  getPosts() {
-    this.postQueryService.getPosts('', this.currentUser.token).subscribe((res) => {
-      this.Posts = res['posts'];
-    })
+  // getPosts() {
+  //   this.postQueryService.getPosts('', this.currentUser.token).subscribe((res) => {
+  //     this.Posts = res['posts'];
+  //   })
+  // }
+
+  getRecentTopics() {
+    this.postQueryService.getRecentPosts(this.currentUser.token).subscribe((res) => {
+      console.log(res);
+      this.Posts = res;
+    });
   }
 
   gotoDetails(id) {

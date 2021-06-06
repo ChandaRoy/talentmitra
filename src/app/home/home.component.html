@@ -19,38 +19,35 @@
               <li data-target="#carousel-example-1z" data-slide-to="1"></li>
               <li data-target="#carousel-example-1z" data-slide-to="2"></li>
             </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
+            <div class="carousel-inner" *ngIf="Posts.length">
+              <div class="carousel-item active" (click)="gotoDetails(Posts[0]._id)">
                 <div class="view">
-                  <img class="d-block w-80" src="https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg"
-                    alt="First slide">
+                  <img class="d-block w-80" [src]="Posts[0].myFile" alt="First slide" style="width: 100%">
                   <div class="mask rgba-black-light"></div>
                 </div>
                 <div class="carousel-caption">
-                  <h3 class="h3-responsive">Slight mask</h3>
-                  <p>Third text</p>
+                  <h3 class="h3-responsive">{{Posts[0].shortDescription}}</h3>
+                  <p [innerHTML]="Posts[0].content|truncateText:30"></p>
                 </div>
               </div>
-              <div class="carousel-item">
+              <div class="carousel-item" (click)="gotoDetails(Posts[1]._id)">
                 <div class="view">
-                  <img class="d-block w-80" src="https://mdbootstrap.com/img/Photos/Slides/img%20(16).jpg"
-                    alt="Second slide">
+                  <img class="d-block w-80" [src]="Posts[1].myFile" alt="Second slide" style="width: 100%">
                   <div class="mask rgba-black-light"></div>
                 </div>
                 <div class="carousel-caption">
-                  <h3 class="h3-responsive">Slight mask</h3>
-                  <p>Third text</p>
+                  <h3 class="h3-responsive">{{Posts[1].shortDescription}}</h3>
+                  <p [innerHTML]="Posts[1].content|truncateText:30"></p>
                 </div>
               </div>
-              <div class="carousel-item">
+              <div class="carousel-item" (click)="gotoDetails(Posts[2]._id)">
                 <div class="view">
-                  <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(9).jpg"
-                    alt="Third slide">
+                  <img class="d-block w-100" [src]="Posts[2].myFile" alt="Third slide" style="width: 100%">
                   <div class="mask rgba-black-light"></div>
                 </div>
                 <div class="carousel-caption">
-                  <h3 class="h3-responsive">Slight mask</h3>
-                  <p>Third text</p>
+                  <h3 class="h3-responsive">{{Posts[2].shortDescription}}</h3>
+                  <p [innerHTML]="Posts[2].content|truncateText:30"></p>
                 </div>
               </div>
             </div>
@@ -89,9 +86,9 @@
                                   alt="Generic placeholder image" style="height:20px">
                               <div class="media-body">
                                   <a href="javascript:void(0)" (click)="gotoDetails(post._id)">
-                                      <p class="mt-0 mb-1 font-weight-bold">{{post.category}}</p>
+                                      <p class="mt-0 mb-1 font-weight-bold">{{post.shortDescription}}</p>
                                   </a>
-                                  <p [innerHTML]="post.content" style="height:20px;overflow:hidden"></p>
+                                  <p [innerHTML]="post.content|truncateText:20" style=""></p>
                               </div>
                           </li>
                       </ul>
