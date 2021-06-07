@@ -14,7 +14,7 @@ export class PostQueryService {
   public currentQuery: Observable<QueryMessage>;
   // public url ="https://talentmitra-o5ryx.ondigitalocean.app";
   // baseURL = "http://localhost:8083/api";
-  public url = 'http://localhost:8080';
+  public url = '';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
 

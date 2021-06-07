@@ -611,8 +611,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         this.http = http; // public url ="https://talentmitra-o5ryx.ondigitalocean.app";
         // baseURL = "http://localhost:8083/api";
-
-        this.url = 'http://localhost:8080';
+        this.url = ''
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]().set('Content-Type', 'application/json');
       }
 
