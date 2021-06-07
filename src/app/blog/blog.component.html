@@ -1,4 +1,4 @@
-<div class="container" style="margin-top:-4rem">
+<div class="container" style="margin-top:3rem">
     <div class="row">
         <div class="col-sm-4 col-lg-4 col-xs-4"></div>
         <div class="col-sm-4 col-lg-4 col-xs-4">
@@ -10,11 +10,6 @@
                         <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-lg-4 col-xs-4" style="float: right;">
-            <div class="text-center mb-3 col-md-12 form-group">
-                <button class="btn teal btn-md white-text" (click)="toggleShow()">Start New Topic</button>
             </div>
         </div>
     </div>
@@ -42,25 +37,48 @@
             <!--Grid column-->
 
             <!--Grid column-->
-            <div class="col-md-3 mb-4">
-                <!--Card-->
-                <div class="card mb-4">
+            <div class="col-md-3 mb-4 pl-4">
 
-                    <div class="card-header">Recent Posts</div>
+                <div class="mb-4">
+                    <div class="mb-3 col-md-12 form-group">
+                        <button class="btn teal btn-md white-text" (click)="toggleShow()">Start New Topic</button>
+                    </div>
+                </div>
+
+                <!--Card-->
+                <div class="mb-4 widget">
+
+                    <h4 class="widget-title">Recent Posts</h4>
 
                     <!--Card content-->
-                    <div class="card-body">
+                    <div class="side-pop list">
 
                         <ul class="list-unstyled" style="font-size:x-small">
                             <li class="media my-2" *ngFor="let post of posts">
-                                <!-- <img class="d-flex mr-3"
-                                    src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-                                    alt="Generic placeholder image" style=""> -->
                                 <div class="media-body">
-                                    <a href="javascript:void(0)" (click)="gotoDetails(post._id)">
-                                        <p class="mt-0 mb-1 font-weight-bold">{{post.shortDescription}}</p>
-                                    </a>
-                                    <p [innerHTML]="post.content|truncateText:20"></p>
+                                    <div class="side-pop-img" style="height: 50px;width:50px">
+                                        <a href="javascript:void(0)" (click)="gotoDetails(post._id)" rel="bookmark">
+                                            <img width="350" height="300" [src]="post.myFile" *ngIf="post.myFile"
+                                                class="attachment-side-thumb size-side-thumb wp-post-image rounded-circle"
+                                                style="height: 40px;width:40px">
+                                            <img width="350" height="300" src="../../assets/images/pen.png"
+                                                *ngIf="!post.myFile"
+                                                class="attachment-side-thumb size-side-thumb wp-post-image rounded-circle"
+                                                style="height: 40px;width:40px">
+                                        </a>
+                                    </div>
+                                    <div class="side-pop-content">
+                                        <h4>
+                                            <a href="javascript:void(0)" (click)="gotoDetails(post._id)">
+                                                {{post.shortDescription|uppercase}}
+                                            </a>
+                                        </h4>
+                                        <!-- <p [innerHTML]="post.content|truncateText:10"
+                                            style="font-size:0.7rem!important">
+                                        </p> -->
+                                        <span class="date">{{post.postedOn| date:"MMM d, y"}}</span>
+                                    </div>
+
                                 </div>
                             </li>
                         </ul>
@@ -70,23 +88,39 @@
                 </div>
                 <!--/.Card-->
                 <!--Card-->
-                <div class="card mb-4">
 
-                    <div class="card-header">My articles</div>
+                <div id="categories-2" class="widget widget_categories">
+                    <h4 class="widget-title">Categories</h4>
+                    <ul>
+                        <li class="cat-item cat-item-2" *ngFor="let group of groups"><a
+                                (click)="gotoPostsByCategory(group._id)" href="javascript:void(0)">{{group._id}}</a>
+                            ({{group.count}})
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="widget mb-4">
+
+                    <div class="widget-title">My articles</div>
 
                     <!--Card content-->
-                    <div class="card-body">
+                    <div class="side-pop list">
 
                         <ul class="list-unstyled" style="font-size:x-small">
                             <li class="media my-2" *ngFor="let thread of threads">
                                 <!-- <img class="d-flex mr-3"
                                     src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
                                     alt="Generic placeholder image" style="height:20px"> -->
-                                <div class="media-body">
-                                    <a href="">
-                                        <p class="mt-0 mb-1 font-weight-bold">{{thread.category}}</p>
-                                    </a>
-                                    <p [innerHTML]="thread.content" style="height:20px;overflow:hidden"></p>
+                                <div class="side-pop-content">
+                                    <h4>
+                                        <a href="javascript:void(0)" (click)="gotoDetails(thread._id)">
+                                            {{thread.shortDescription|uppercase}}
+                                        </a>
+                                    </h4>
+                                    <span class="date">{{thread.postedOn| date:"MMM d, y"}}</span>
+                                    <!-- <p [innerHTML]="thread.content|truncateText:20" style="font-size:0.7rem!important">
+                                    </p> -->
                                 </div>
                             </li>
                         </ul>
@@ -95,30 +129,6 @@
 
                 </div>
                 <!--/.Card-->
-                <div class="card mb-4">
-
-                    <div class="card-header">Categories</div>
-
-                    <!--Card content-->
-                    <div class="card-body">
-
-                        <ul class="list-unstyled" style="font-size:x-small">
-                            <li class="media my-2" *ngFor="let group of groups">
-                                <!-- <img class="d-flex mr-3"
-                                    src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-                                    alt="Generic placeholder image" style=""> -->
-                                <div class="media-body">
-                                    <a (click)="gotoPostsByCategory(group._id)" href="javascript:void(0)">
-                                        <span class="mt-0 mb-1 font-weight-bold">{{group._id}}</span>
-                                        <span class="badge pull-right">{{group.count}}</span>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-
-                    </div>
-
-                </div>
 
             </div>
             <!--Grid column-->

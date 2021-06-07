@@ -4,6 +4,7 @@ import { first } from 'rxjs/operators';
 
 import { User } from '../_models/user';
 import { AuthServiceService } from '../login/auth-service.service';
+import { PostQueryService } from '../_services/post-query.service';
 
 
 import { UserService } from '../_services/user.service';
@@ -21,6 +22,7 @@ export class UserDetailsComponent implements OnInit {
   error: boolean = false;
   id: any;
   user:any;
+  posts: any = [];
 
 
   constructor(
@@ -28,7 +30,8 @@ export class UserDetailsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthServiceService,
-    private userService: UserService
+    private userService: UserService,
+    private postQueryService: PostQueryService
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
     if (!this.currentUser) { 
@@ -51,7 +54,18 @@ export class UserDetailsComponent implements OnInit {
     this.userService.gerUserProfile(this.id,this.currentUser.token).subscribe((res) => {
       console.log(res);
       this.user = res;
+      this.getUserThreads();
     })
   }
 
+  getUserThreads() {
+    this.postQueryService.getUserThreads(this.user.email, this.currentUser.token).subscribe((res) => {
+      console.log(res);
+      this.posts = res;
+    });
+  }
+
+  gotoDetails(id) {
+    this.router.navigate(['blogs/post-detail/'+id]);
+  }
 }

@@ -73,10 +73,17 @@ router.get('/my-topic-threads', function (req, res, next) {
 })
 
 router.get('/my-post-threads', function (req, res, next) {
-  console.log("++++++++++++++++++++++++++++++++++++++");
-  console.log(req.user);
   Post.find({
-    'postedBy.email': req.user.email
+    'postedByEmail': req.user.email
+  }, {}, function (err, data) {
+    if(!err)
+    res.send(data);
+  })
+})
+
+router.get('/user-post-threads/:email', function (req, res, next) {
+  Post.find({
+    'postedByEmail': req.params.email
   }, {}, function (err, data) {
     if(!err)
     res.send(data);
@@ -230,6 +237,7 @@ router.post('/addPost', function (req, res) {
       category: req.body.category,
       shortDescription: req.body.shortDescription,
       postedBy: req.user.id,
+      postedByEmail: req.user.email,
       postedOn: Date.now(),
       updatedOn: Date.now(),
       myFile: url 
@@ -241,6 +249,7 @@ router.post('/addPost', function (req, res) {
         postCreated: {
           _id: result._id,
           category: result.category,
+          postedByEmail: req.user.email,
           myFile: result.file
         }
       })
@@ -256,6 +265,7 @@ router.post('/addPost', function (req, res) {
       content: req.body.content,
       category: req.body.category,
       shortDescription: req.body.shortDescription,
+      postedByEmail: req.user.email,
       postedBy: req.user.id,
       postedOn: Date.now(),
       updatedOn: Date.now()
@@ -266,7 +276,8 @@ router.post('/addPost', function (req, res) {
         message: "Post added successfully!",
         postCreated: {
           _id: result._id,
-          category: result.category
+          category: result.category,
+          postedByEmail: req.user.email
         }
       })
     }).catch(err => {
@@ -290,7 +301,8 @@ router.post('/addTopic', function (req, res) {
       title: req.body.title,
       description: req.body.description,
       category: req.body.category,
-      subcategory: req.body.subcategory
+      subcategory: req.body.subcategory,
+      postedByEmail: req.user.email
     });
     topic.save().then(result => {
       // console.log(result);

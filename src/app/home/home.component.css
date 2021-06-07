@@ -1,3 +1,11 @@
+@import "../../assets/blog.min.css";
+
+.talentmitra-goal{
+  color: white;
+  text-shadow: 0.2px 0.1px 2px black;
+  font-size: 29px;
+}
+
 .example-headers-align .mat-expansion-panel-header-title,
 .example-headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;

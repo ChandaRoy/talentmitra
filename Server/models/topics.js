@@ -9,6 +9,7 @@ var topicSchema = new mongoose.Schema({
     updatedOn: String,
     title: String,
     description: String,
+    postedByEmail: String,
     category: String,
     subcategory: String,
     likes: Number,

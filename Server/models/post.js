@@ -12,6 +12,7 @@ var postSchema = new mongoose.Schema({
         updatedOn: String,
         category: String,
         shortDescription: String,
+        postedByEmail: String,
         myFile: String,
         comments: [{
           commentedBy: {type: Schema.Types.ObjectId,ref: 'User'},

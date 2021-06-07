@@ -38,7 +38,7 @@ export class BlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTopicGroups();
-    this.getMyTopicThreads();
+    this.getMyPostThreads();
     this.getRecentTopics();
   }
 
@@ -64,7 +64,7 @@ export class BlogComponent implements OnInit {
     });
   }
 
-  getMyTopicThreads() {
+  getMyPostThreads() {
     this.postQueryService.getMyPostThreads(this.currentUser.token).subscribe((res) => {
       console.log(res);
       this.threads = res;

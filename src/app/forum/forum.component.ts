@@ -60,6 +60,7 @@ export class ForumComponent implements OnInit {
       this.currentUser.token
     ).subscribe((data) => {
       this.Topics.push(data);
+      this.close();
     });
   }
 
