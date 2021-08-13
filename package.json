@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node ${SCRIPT:-app.js}",
-    "deploy": "gcloud app deploy app.yaml --promote",
+    "start": "node ./bin/www",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

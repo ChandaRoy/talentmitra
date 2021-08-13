@@ -227,8 +227,6 @@ router.post('/addPost', function (req, res) {
       return
     }
     if(req.file) {
-    // const url = req.protocol + '://' + req.get('host');
-    // console.log(req.file);
     const url = req.file.path;
     console.log("url is ", req.file.path);
     const post = new Post({

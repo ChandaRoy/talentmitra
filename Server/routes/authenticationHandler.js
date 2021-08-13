@@ -13,37 +13,16 @@ module.exports = function (passport) {
   router.get('/success', function (req, res) {
     console.log(req.user);
     res.send({ error: null });
-    //res.send({redirect: '/home'});
-    //  res.status(200).json();
   });
 
   //sends failure login state back to angular
   router.get('/failure', function (req, res) {
     res.send({ error: "PASSWORD_ERR" });
-    // req.session.user=null;
   });
   router.get('/regfailure', function (req, res) {
     res.send({ error: "EMAIL_ERR" });
-    // req.session.user=null;
   });
 
-  //   router.post('/login', passport.authenticate('local-login', {
-  //     // successRedirect: '/auth/success',
-  //     failureRedirect: '/auth/failure'
-  //   }),function(req,res){
-  //     userDetails = {
-  //       firstName : req.user.firstName,
-  //       lastName : req.user.lastName,
-  //       email : req.user.email,
-  //       photo: req.user.photo,
-  //       aboutMe: req.user.aboutMe,
-  //       company: req.user.company,
-  //       id :req.user._id
-
-  //     };
-  // console.log(userDetails);
-  // res.send({"user":userDetails});
-  //   });
 
 
   router.post('/login', function (req, res, next) {
@@ -59,8 +38,8 @@ module.exports = function (passport) {
           res.send(err);
         }
         // generate a signed son web token with the contents of user object and return it in the response
-        
-         user = {
+
+        user = {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
@@ -70,7 +49,7 @@ module.exports = function (passport) {
           id: user._id
         };
         const token = jwt.sign(user, 'techbirdies');
-        return res.json({  token });
+        return res.json({ token });
       });
     })(req, res);
   });
@@ -83,7 +62,6 @@ module.exports = function (passport) {
   });
 
   router.post('/register', passport.authenticate('sign-up', {
-    // successRedirect: '/auth/success',
     failureRedirect: '/auth/regfailure'
   }), function (req, res) {
     userDetails = {
@@ -166,13 +144,13 @@ module.exports = function (passport) {
 
           service: 'Gmail',
           auth: {
-            user: 'techbirdies@gmail.com',
-            pass: 'chanda20@'
+            user: 'XXXXXXXXXXXXXX',
+            pass: 'XXXXXXX'
           }
         });
 
         var mailOption = {
-          from: 'TechBirdies <techbirdies@gmail.com>',
+          from: 'TechBirdies <xxxxxxxx@gmail.com>',
           to: email,
           subject: 'Welcome to TechBirdie',
           text: "Your verification code is " + code + "Enter this code to register.",
@@ -182,14 +160,10 @@ module.exports = function (passport) {
           if (error) {
             console.log(error);
             res.redirect('/index.html')
-            //res.send({code:"1234"});
           }
           else {
             console.log("success");
-            console.log(code);
-            //res.send(code);
             res.send({ code: code });
-            //res.redirect('/index.html')
           }
         });
 
@@ -216,13 +190,13 @@ module.exports = function (passport) {
 
           service: 'Gmail',
           auth: {
-            user: 'techbirdies@gmail.com',
-            pass: 'chanda20@'
+            user: 'XXXXXXXXXXXXXXX',
+            pass: 'xxxxxxx'
           }
         });
         var code = req.body.code;
         var mailOption = {
-          from: 'TechBirdie <techbirdies@gmail.com>',
+          from: 'TechBirdie <xxxxxxx@gmail.com>',
           to: email,
           subject: 'TechBirdie Password Reset',
           text: "We heard you need a password reset. Code is: " + code + "\nEnter this code to reset your password.",
@@ -234,7 +208,6 @@ module.exports = function (passport) {
             res.json({ 'sendStatus': false });
           }
           else {
-            //res.send(code);
             res.json({ 'sendStatus': true });
           }
         });
@@ -243,9 +216,9 @@ module.exports = function (passport) {
   });
   //forgot passwords ends here
 
-	var createHash = function (password) {
-		return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-	};
+  var createHash = function (password) {
+    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+  };
 
 
   return router;

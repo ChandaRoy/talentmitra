@@ -18,7 +18,5 @@ module.exports = {
 		'clientID':process.env.DROPBOX_APP_CLIENTID||"xhr4rvb0mv5h05i",
 		'clientSecret':process.env.DROPBOX_APP_CLIENTSECRET||"toy07da0j1ruu5y",
 		'callbackURL': process.env.DROPBOX_APP_CALLBACKURL||"http://limber.stackroute.in:8080/auth/dropbox/callback"
-
-
 	}
 }

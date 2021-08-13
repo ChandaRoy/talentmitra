@@ -39,6 +39,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/auth.js
+/upload.js
 
 # System Files
 .DS_Store

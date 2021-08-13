@@ -14,9 +14,7 @@ var RedisStore = require('connect-redis')(session);
 var app = express();
 
 var routes = require('./Server/routes/index');
-//var users = require('./routes/users');
 var user = require('./Server/routes/user');
-// var github-api=require('./routes/github-api.js');
 var authenticationHandler = require('./Server/routes/authenticationHandler')(passport);
 var postContent = require('./Server/routes/postContent');
 app.use(session({
@@ -36,16 +34,13 @@ initPassport(passport);
 //Add socket.js link here
 //
 app.use(express.static(path.join(__dirname, 'dist/tech-bidies-app-v2')));
-// app.use('/', express.static(path.join(__dirname, 'dist')));
 
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use('/', routes);
 app.use('/auth',authenticationHandler);
 app.use('/content', passport.authenticate('jwt', {session: false}), postContent);
 app.use('/user', passport.authenticate('jwt', {session: false}), user);
@@ -66,7 +61,6 @@ app.use(function(req, res, next) {
 
 
 app.use(express.static(path.join(__dirname, 'dist/tech-bidies-app-v2')));
-// app.use('/', express.static(__dirname + '/dist/tech-bidies-app-v2'));
 
 
 
@@ -74,7 +68,6 @@ app.use(express.static(path.join(__dirname, 'dist/tech-bidies-app-v2')));
 app.set('views', path.join(__dirname, 'Server/views'));
 app.set('view engine', 'ejs');
 
-// app.use(express.static(path.join(__dirname, 'public')));
 
 
 

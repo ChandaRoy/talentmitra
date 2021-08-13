@@ -6,21 +6,6 @@ var path = require('path');
 
 var User = require('../models/user.js');
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-
-//     cb(null, 'uploads/dps');
-//   },
-//   filename: (req, file, cb) => {
-//     console.log(req.body);
-//     let email = req.body.email;
-//     const fileName = email+'.'+ file.originalname.split('.')[1];
-
-//     console.log(fileName);
-//     cb(null, fileName)
-//   }
-// });
-
 //************************ */cloudinary *************************
 const cloudinary = require("./upload");
 const { CloudinaryStorage } = require('multer-storage-cloudinary');

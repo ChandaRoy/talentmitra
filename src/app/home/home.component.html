@@ -34,7 +34,7 @@
       <div class="row ">
 
         <!--Grid column-->
-        <div class="col-md-8 mb-4  white-text text-center text-md-left pr-4">
+        <div class="col-md-8 mb-4  white-text text-center text-md-left pr-4" *ngIf="loggedIn">
           <div id="carouselExampleFade" class="carousel slide " data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
@@ -136,8 +136,9 @@
             <div class="about-widget">
 
               <div class="about-img">
-                <a href=""><img
-                    src="https://res.cloudinary.com/techbirdies/image/upload/v1622943572/user-profiles/pbrbkeydvojgi4qm44bm.jpg" alt="About Me" style="width:258px;height:172px"></a>
+                <a href="">
+                  <img src="https://res.cloudinary.com/techbirdies/image/upload/v1622943572/user-profiles/pbrbkeydvojgi4qm44bm.jpg" alt="About Me" style="width:258px;height:172px">
+                </a>
               </div>
 
               <p>Continuosly learning and always ready to help others learn too.</p>

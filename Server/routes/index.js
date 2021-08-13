@@ -9,13 +9,13 @@ router.post('/query', function (req, res, next) {
 
     service: 'Gmail',
     auth: {
-      user: 'techbirdies@gmail.com',
-      pass: 'chanda20@'
+      user: 'XXXXXXXXXXXXXX',
+      pass: 'xxxxxxx'
     }
   });
   var mailOption1 = {
-    from: 'TechBirdie <techbirdies@gmail.com>',
-    to: ['techbirdies@gmail.com','devvrat.108@gmail.com'],
+    from: 'TechBirdie <xxxxxxxxx@gmail.com>',
+    to: ['xxxxxxx@gmail.com','yyyyyyy@gmail.com'],
     subject: req.body.subject,
     text: "",
     html: `<h6>Hi Expert,</h6>
@@ -32,7 +32,7 @@ router.post('/query', function (req, res, next) {
     }
     else {
       var mailOption2 = {
-        from: 'TechBirdie <techbirdies@gmail.com>',
+        from: 'TechBirdie <xxxxxxxxx@gmail.com>',
         to: req.body.email,
         subject: req.body.subject,
         text: "",
