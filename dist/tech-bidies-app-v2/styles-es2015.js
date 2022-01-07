@@ -441,7 +441,7 @@ module.exports = exported;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/chandaroy/Documents/SelfLearning /talentmitra-v2/talentmitra/src/styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! C:\Chanda\Personal\SelfWork\talentmitra\src\styles.css */"./src/styles.css");
 
 
 /***/ })

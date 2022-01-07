@@ -10,7 +10,7 @@ router.post('/query', function(req, res, next) {
         service: 'Gmail',
         auth: {
             user: 'techbirdies@gmail.com',
-            pass: 'chanda20@'
+            pass: 'tech@roy'
         }
     });
     var mailOption1 = {

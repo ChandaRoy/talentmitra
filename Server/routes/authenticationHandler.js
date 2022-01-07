@@ -143,7 +143,7 @@ module.exports = function(passport) {
                     service: 'Gmail',
                     auth: {
                         user: 'techbirdies@gmail.com',
-                        pass: 'chanda20@'
+                        pass: 'tech@roy'
                     }
                 });
 
@@ -188,7 +188,7 @@ module.exports = function(passport) {
                     service: 'Gmail',
                     auth: {
                         user: 'techbirdies@gmail.com',
-                        pass: 'chanda20@'
+                        pass: 'tech@roy'
                     }
                 });
                 var code = req.body.code;
