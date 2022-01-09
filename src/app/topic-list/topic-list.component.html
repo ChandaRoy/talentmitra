@@ -1,34 +1,40 @@
-
-     <div class="post"  *ngFor="let topic of Topics;">
-        <div class="wrap-ut pull-left">
-            <div class="userinfo pull-left">
-                <div class="avatar">
-                    <img src="../../assets/images/birdie.svg" alt="" style="height:37px">
-                    <!-- <div class="status green">&nbsp;</div> -->
-                </div>
-
-                <div class="icons">
-                    <!-- <i *ngIf="!topic.liked" class="fa fa-thumbs-up grey-text"></i> -->
-                    
-                    <!-- <i *ngIf="topic.liked" class="fa fa-thumbs-up blue-text"></i> -->
-                </div>
+<div class="input-group mb-3">
+    <input type="text" [(ngModel)]="searchkey" class="form-control" placeholder="Search Topics" aria-label="Search By Tag"
+        aria-describedby="basic-addon2">
+    <div class="input-group-append" (click)="searchByTag()">
+        <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+    </div>
+</div>
+<div class="post" *ngFor="let topic of Topics;">
+    <div class="wrap-ut pull-left">
+        <div class="userinfo pull-left">
+            <div class="avatar">
+                <img src="../../assets/images/birdie.svg" alt="" style="height:37px">
+                <!-- <div class="status green">&nbsp;</div> -->
             </div>
-            <div class="posttext pull-left">
-                <h2><a (click)="gotoDetails(topic._id)">{{topic.title}}</a></h2>
-                <p>{{topic.description}}</p>
+
+            <div class="icons">
+                <!-- <i *ngIf="!topic.liked" class="fa fa-thumbs-up grey-text"></i> -->
+
+                <!-- <i *ngIf="topic.liked" class="fa fa-thumbs-up blue-text"></i> -->
             </div>
-            <div class="clearfix"></div>
         </div>
-        <div class="postinfo pull-left">
-            <div class="comments">
-                <div class="commentbg">
-                    {{topic.comments.length}}
-                    <div class="mark"></div>
-                </div>
-
-            </div>
-            <!-- <div class="views"><i class="fa fa-eye"></i> 1,568</div> -->
-            <div class="time"><i class="fa fa-clock-o"></i> {{topic.postedOn| date:"dd/MM/yy"}}</div>                                    
+        <div class="posttext pull-left">
+            <h2><a (click)="gotoDetails(topic._id)">{{topic.title}}</a></h2>
+            <p>{{topic.description}}</p>
         </div>
         <div class="clearfix"></div>
     </div>
+    <div class="postinfo pull-left">
+        <div class="comments" [title]="topic.answers.length + ' Answers'">
+            <div class="commentbg">
+                {{topic.answers.length}}
+                <div class="mark"></div>
+            </div>
+
+        </div>
+        <div class="views" [title]="topic.comments.length + ' Comments'"><i class="fas fa-comment"></i> {{topic.comments.length}}</div>
+        <div class="time"><i class="fa fa-clock-o"></i> {{topic.postedOn| date:"dd/MM/yy"}}</div>
+    </div>
+    <div class="clearfix"></div>
+</div>

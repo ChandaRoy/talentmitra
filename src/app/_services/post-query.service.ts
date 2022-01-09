@@ -30,7 +30,8 @@ export class PostQueryService {
 
   // Forum methods
 
-  addTopic(data, token): Observable<any> {
+  addTopic(data, tags, token): Observable<any> {
+    data.tags = tags;
     return this.http.post<any>(`${this.url}/content/addTopic?secret_token=` + token, data, {
       reportProgress: true,
       observe: 'events'
@@ -44,9 +45,16 @@ export class PostQueryService {
     })
   }
 
-  addTopicsCommentReply(data, token): Observable<any> {
+  addAnswer(data, token): Observable<any> {
+    return this.http.post<any>(`${this.url}/content/topicAnswer?secret_token=` + token, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
+  }
+
+  addTopicsAnswerComment(data, token): Observable<any> {
     console.log(data);
-    return this.http.post<any>(`${this.url}/content/topicCommentReply?secret_token=` + token, data, {
+    return this.http.post<any>(`${this.url}/content/topicAnswerComment?secret_token=` + token, data, {
       reportProgress: true,
       observe: 'events'
     })
@@ -77,6 +85,11 @@ export class PostQueryService {
   getUserThreads(email, token) {
     return this.http.get(this.url + '/content/user-post-threads/' + email +'?secret_token=' + token);
   }
+
+  searchByTag(key, token) {
+    return this.http.get(this.url + '/content/getByTag/'+ key +'?secret_token=' + token);
+  }
+
 
   // Forum methods end
 

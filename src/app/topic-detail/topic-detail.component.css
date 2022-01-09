@@ -147,3 +147,9 @@ p {
 section {
     font-size:small;
 }
+
+mat-chip {
+    border: 1px solid gray;
+    background: #eee;
+    font-size: smaller;
+}

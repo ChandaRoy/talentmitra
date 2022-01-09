@@ -14,15 +14,111 @@
                 <div class="card-body">
                     <p class="h6 my-4">{{topic.title}} </p>
                     <p>{{topic.description}}</p>
+                    <mat-chip-list aria-label="Tag selection">
+                        <mat-chip *ngFor="let tag of topic.tags">{{tag}}</mat-chip>
+                    </mat-chip-list>
                 </div>
                 <div class="card-footer">
-                   <span class="pull-right"> <i class="fa fa-clock-o"></i> Posted on : {{topic.postedOn| date:"dd MMM"}} @ {{topic.postedOn| date:"HH:mm"}}</span>
+                    <span class="pull-left" (click)="scrollToCommentForm()"><a class="nav-link">{{'Comments
+                            ('+topic.comments?.length+')'}}</a></span>
+                    <span class="pull-left" (click)="scrollToAnswerForm()"><a class="nav-link">{{'Answers
+                            ('+topic.answers?.length+')'}}</a></span>
+                    <span class="pull-right"> <i class="fa fa-clock-o"></i> Posted on : {{topic.postedOn| date:"dd
+                        MMM"}} @ {{topic.postedOn| date:"HH:mm"}}</span>
                 </div>
             </div>
             <!--/.Card-->
+
+            <!--Answers-->
+            <div class="card card-comments mb-3">
+                <div class="card-header font-weight-bold">{{topic.answers?topic.answers.length : 0}} Answers</div>
+                <div class="card-body">
+                    <div *ngIf="topic.answers">
+                        <div class="media d-block d-md-flex mb-2" *ngFor="let answer of topic.answers">
+                            <img class="d-flex mb-3 mx-auto " [src]="answer.answeredBy?.photo"
+                                style="width: 20px!important;" alt="Generic placeholder image">
+                            <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                <div class="mt-0">
+                                    <a class="pull-right" (click)="onShowReplyForm(answer._id)">
+                                        <i class="fas fa-reply"></i>
+                                    </a>
+                                    <span class="blue-text">
+                                        {{ answer.answeredBy?.firstName +' '+ answer.answeredBy?.lastName}}
+                                    </span>
+                                    <span class="grey-text"> {{' '+answer.answeredOn| date:"dd
+                                        MMM"}} {{answer.answeredOn| date:"HH:mm"}}</span>
+                                    <div>
+                                        {{answer.answerText}}
+                                    </div>
+
+                                </div>
+
+                                <div *ngIf="answer.answerComments && answer.answerComments.length" class="mt-2"
+                                    style="font-size: smaller;">
+                                    <hr style="margin-left:10%;margin-right:10%">
+                                    <div class="media d-block d-md-flex"
+                                        *ngFor="let commentReply of answer.answerComments">
+                                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                            <div class="mt-0">
+                                                <span>
+                                                    {{commentReply.commentText +' - '}}
+                                                </span>
+                                                <span class="blue-text">
+                                                    {{ commentReply.commentedBy?.firstName +' '+
+                                                    commentReply.commentedBy?.lastName}}
+                                                </span>
+                                                <span class="grey-text"> {{' '+commentReply.commentedOn| date:"dd
+                                                    MMM"}} {{commentReply.commentedOn| date:"HH:mm"}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- Quick Reply -->
+                                <div class="form-group mt-4" [id]="answer._id" *ngIf="showReplyForm === answer._id">
+                                    <label for="quickReplyFormComment">Your comment</label>
+                                    <textarea class="form-control" id="quickReplyFormComment" rows="2"
+                                        [(ngModel)]="answerComment"></textarea>
+
+                                    <div class="text-center">
+                                        <button class="btn btn-info btn-sm"
+                                            (click)="onAnswerComment(answer._id)">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.Answers-->
+
+            <!--Comments-->
+            <div class="card card-comments mb-3">
+                <div class="card-header font-weight-bold">{{topic.comments?topic.comments.length : 0}} comments</div>
+                <div class="card-body">
+                    <div *ngIf="topic.comments">
+                        <div class="media d-block d-md-flex" *ngFor="let comment of topic.comments">
+                            <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                <div class="mt-0">
+                                    <span>
+                                        {{comment.commentText +' - '}}
+                                    </span>
+                                    <span class="blue-text">
+                                        {{ comment.commentedBy?.firstName +' '+ comment.commentedBy?.lastName}}
+                                    </span>
+                                    <span class="grey-text"> {{' '+comment.commentedOn| date:"dd
+                                        MMM"}} {{comment.commentedOn| date:"HH:mm"}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.Comments-->
+
             <!--Reply-->
-            <div class="card mb-3" id="comment">
-                <div class="card-header font-weight-bold">Leave a reply</div>
+            <div class="card mb-3" id="commentForm" #commentForm>
+                <div class="card-header font-weight-bold">Comment</div>
                 <div class="card-body">
                     <!-- Default form reply -->
                     <!-- Comment -->
@@ -38,52 +134,26 @@
                 </div>
             </div>
             <!--/.Reply-->
-            <!--Comments-->
-            <div class="card card-comments mb-3" style="height:400px;overflow-y:scroll">
-                <div class="card-header font-weight-bold">{{topic.comments?topic.comments.length : 0}} comments</div>
-                <div class="card-body">
-                    <div *ngIf="topic.comments">
-                        <div class="media d-block d-md-flex mt-4" *ngFor="let comment of topic.comments">
-                            <img class="d-flex mb-3 mx-auto "
-                                src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg"
-                                alt="Generic placeholder image">
-                            <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                <h6 class="mt-0 font-weight-bold">{{comment.commentedByName}}
-                                    <a class="pull-right" (click)="onShowReplyForm(comment._id)">
-                                        <i class="fas fa-reply"></i>
-                                    </a>
-                                </h6>
-                                {{comment.commentText}}
-                                <div *ngIf="comment.commentReplies">
-                                    <div class="media d-block d-md-flex mt-3"
-                                        *ngFor="let commentReply of comment.commentReplies">
-                                        <img class="d-flex mb-3 mx-auto "
-                                            src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg"
-                                            alt="Generic placeholder image">
-                                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                            <h6 class="mt-0 font-weight-bold">{{commentReply.commentedByName}}
-                                            </h6>
-                                            {{commentReply.commentText}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Quick Reply -->
-                                <div class="form-group mt-4" [id]="comment._id" *ngIf="showReplyForm === comment._id">
-                                    <label for="quickReplyFormComment">Your comment</label>
-                                    <textarea class="form-control" id="quickReplyFormComment" rows="5"
-                                        [(ngModel)]="commentReply"></textarea>
 
-                                    <div class="text-center">
-                                        <button class="btn btn-info btn-sm"
-                                            (click)="onCommentReply(comment._id)">Post</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <!--Answer-->
+            <div class="card mb-3" id="answerForm" #answerForm>
+                <div class="card-header font-weight-bold">Leave an Answer</div>
+                <div class="card-body">
+                    <!-- Default form reply -->
+                    <!-- Comment -->
+                    <div class="form-group">
+                        <label for="replyFormComment">Your comment</label>
+                        <textarea class="form-control" id="replyFormComment" rows="3" [(ngModel)]="answer"></textarea>
                     </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-info btn-md" (click)="onAnswer()" type="submit">Post</button>
+                    </div>
+                    <!-- Default form reply -->
+
                 </div>
             </div>
-            <!--/.Comments-->
+            <!--/.Answer-->
+
         </div>
         <!--Grid column-->
     </div>

@@ -15,6 +15,7 @@ export class TopicListComponent implements OnInit {
   Topics: any = [];
   currentUser: any;
   category: any = '';
+  searchkey: string = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -37,6 +38,17 @@ export class TopicListComponent implements OnInit {
       console.log(res);
       this.Topics = res;
     })
+  }
+
+  searchByTag() {
+    if(this.searchkey && this.searchkey.length){
+      this.postQueryService.searchByTag(this.searchkey, this.currentUser.token).subscribe((res) => {
+        console.log(res);
+        this.Topics = res;
+      })
+    } else {
+      this.getTopics();
+    }
   }
 
   gotoDetails(id) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { User } from '../_models/user';
@@ -23,6 +23,7 @@ export class ForumComponent implements OnInit {
   groups: any = [];
   categories: any = [];
   threads: any =[];
+  tags:string[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,15 +49,20 @@ export class ForumComponent implements OnInit {
   
   toggleShow() {
     this.showCreate = !this.showCreate;
+    if(this.showCreate){
+      console.log(this.showCreate);
+      this.scrollToForm();
+    }
   }
 
   close() {
     this.showCreate = false;
   }
   onSubmit() {
-
+    console.log(this.tags);
     this.postQueryService.addTopic(
       this.topicContent.value,
+      this.tags,
       this.currentUser.token
     ).subscribe((data) => {
       this.Topics.push(data);
@@ -99,6 +105,14 @@ export class ForumComponent implements OnInit {
 
   gotoDetails(id) {
     this.router.navigate(['forum/topic-detail/'+id]);
+  }
+
+  addTag(newItem: any) {
+    this.tags = newItem;
+  }
+
+  public scrollToForm(): void {
+    window.scroll(0,0);
   }
 
 }

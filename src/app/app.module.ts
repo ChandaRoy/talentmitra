@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,6 +38,7 @@ import { BlogCreateComponent } from './blog-create/blog-create.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { TruncateTextPipe } from './_pipes/truncare-text.pipe';
+import { AddTagsComponent } from './add-tags/add-tags.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { TruncateTextPipe } from './_pipes/truncare-text.pipe';
     BlogCreateComponent,
     UpdateProfileComponent,
     UserDetailsComponent,
-    TruncateTextPipe
+    TruncateTextPipe,
+    AddTagsComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,7 @@ import { TruncateTextPipe } from './_pipes/truncare-text.pipe';
     FormsModule,
     AngularEditorModule
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [AlertService, AuthServiceService, AuthGuardService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

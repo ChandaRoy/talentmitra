@@ -8,6 +8,10 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+const cors = require('cors');
+app.use(cors({
+    origin: '*'
+}));
 
 var db = require('./Server/routes/db.connection');
 var RedisStore = require('connect-redis')(session);
@@ -18,13 +22,13 @@ var user = require('./Server/routes/user');
 var authenticationHandler = require('./Server/routes/authenticationHandler')(passport);
 var postContent = require('./Server/routes/postContent');
 app.use(session({
-  store: new RedisStore({
-    host: process.env.REDIS_HOST||'127.0.0.1',
-    port: process.env.REDIS_PORT||6379,
-    db: 7
-  }),
+    store: new RedisStore({
+        host: process.env.REDIS_HOST || '127.0.0.1',
+        port: process.env.REDIS_PORT || 6379,
+        db: 7
+    }),
 
-  secret:process.env.REDIS_SECRET||'fragile'
+    secret: process.env.REDIS_SECRET || 'fragile'
 }));
 
 var initPassport = require('./Server/passport-init');
@@ -41,22 +45,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/auth',authenticationHandler);
-app.use('/content', passport.authenticate('jwt', {session: false}), postContent);
-app.use('/user', passport.authenticate('jwt', {session: false}), user);
+app.use('/auth', authenticationHandler);
+app.use('/content', passport.authenticate('jwt', { session: false }), postContent);
+app.use('/user', passport.authenticate('jwt', { session: false }), user);
 
 
 // view engine setup
 
 app.use(function(req, res, next) {
-  if (req.isAuthenticated())
-  {
-    return next();
-  }
-  else
-  {
-    return res.redirect('');
-  }
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        return res.redirect('');
+    }
 });
 
 
@@ -76,23 +77,23 @@ app.set('view engine', 'ejs');
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
     });
-  });
 }
 
 //production error handler
 //no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-   res.render('error', {
-   message: err.message,
-    error: {}
- });
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 module.exports = app;
