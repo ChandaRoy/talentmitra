@@ -1,20 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
+var cred = require('../config/email-config');
 
 /* GET home page. */
 
 router.post('/query', function(req, res, next) {
     var transporter = nodemailer.createTransport({
 
-        service: 'Gmail',
+        service: cred.service,
         auth: {
-            user: 'techbirdies@gmail.com',
-            pass: 'tech@roy'
+            user: cred.email,
+            pass: cred.pwd
         }
     });
     var mailOption1 = {
-        from: 'TechBirdie <techbirdies@gmail.com>',
+        from: cred.from,
         to: ['chandasays2me@gmail.com', 'devvrat.108@gmail.com'],
         subject: req.body.subject,
         text: "",
@@ -31,7 +32,7 @@ router.post('/query', function(req, res, next) {
             res.json({ 'sendStatus': false });
         } else {
             var mailOption2 = {
-                from: 'TechBirdie <techbirdies@gmail.com>',
+                from: cred.from,
                 to: req.body.email,
                 subject: req.body.subject,
                 text: "",
@@ -39,7 +40,7 @@ router.post('/query', function(req, res, next) {
                <div>We have received your query. We'll get back to you shortly.</div><br>
                <div>Thanks for connecting with us.</div>
                <div>Have a wonderful day ahead!</div><br>
-               <div>TechBirdies Team</div>
+               <div>DigiSkill Studio Team</div>
         `
             }
             transporter.sendMail(mailOption2, function(error2, info2) {
